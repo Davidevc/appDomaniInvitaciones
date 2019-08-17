@@ -2,21 +2,14 @@ package com.example.domanisistemainvitaciones.modelos;
 
 public class ClienteEntrada {
 
-    public int uid;
-    public String Nombre;
-    public String Correo;
-    public String FechaNac;
+    private String Nombre;
+    private String Correo;
+    private String dia;
+    private String mes;
 
     public ClienteEntrada() {
     }
 
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
 
     public String getNombre() {
         return Nombre;
@@ -34,21 +27,29 @@ public class ClienteEntrada {
         Correo = correo;
     }
 
-    public String getFechaNac() {
-        return FechaNac;
+    public String getDia() {
+        return dia;
     }
 
-    public void setFechaNac(String fechaNac) {
-        FechaNac = fechaNac;
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
     }
 
     @Override
     public String toString() {
         return "ClienteEntrada{" +
-                "uid=" + uid +
-                ", Nombre='" + Nombre + '\'' +
+                "Nombre='" + Nombre + '\'' +
                 ", Correo='" + Correo + '\'' +
-                ", FechaNac='" + FechaNac + '\'' +
+                ", dia='" + dia + '\'' +
+                ", mes='" + mes + '\'' +
                 '}';
     }
 }

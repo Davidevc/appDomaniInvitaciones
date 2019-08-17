@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*        Spinner dia = findViewById(R.id.idDia);
-        ArrayAdapter<CharSequence> adapterDia = ArrayAdapter.createFromResource(this, R.array.dias,android.R.layout.simple_spinner_item);
-        adapterDia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dia.setAdapter(adapterDia);*/
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -65,5 +61,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
+
+
 }
 

@@ -39,7 +39,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -70,7 +71,25 @@
                 android:layout_width="104dp"
                 android:layout_height="32dp"
                 android:layout_weight="1"
-                android:textSize="30sp" />/>
+                android:textSize="30sp" /><![CDATA[
+
+            />
+        ]]>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/idAgregarCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agregar Cliente"
+                android:textColorHint="#001B0808"
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
