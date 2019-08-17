@@ -6,8 +6,8 @@
     tools:context=".Fragments.anadirUsuario">
 
     <LinearLayout
-        android:layout_width="377dp"
-        android:layout_height="609dp"
+        android:layout_width="489dp"
+        android:layout_height="709dp"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Ingrese Nombre"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/txtCorreo"
@@ -25,13 +26,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Ingrese Correo"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/txtFN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingrese Fecha de Nacimiento" />
+            android:layout_marginTop="8dp"
+            android:text="Ingrese Fecha de Nacimiento :"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,26 +47,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Dia :"
+                android:textSize="24sp" />
 
             <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="62dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/idDia"
+                android:layout_width="59dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:textSize="30sp" />/>
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Mes :"
+                android:textSize="24sp" />/>
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/idMes"
                 android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:textSize="30sp" />/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
