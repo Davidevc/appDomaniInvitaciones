@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "983633884078",
+    "firebase_url": "https://lista-de-invitados-evento.firebaseio.com",
+    "project_id": "lista-de-invitados-evento",
+    "storage_bucket": "lista-de-invitados-evento.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983633884078:android:5733667794b60e6b",
+        "android_client_info": {
+          "package_name": "com.example.domanisistemainvitaciones"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983633884078-7sph73i1rnfrkb21l5704to35m3aovp8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.domanisistemainvitaciones",
+            "certificate_hash": "3f5819e8fb1b142e9a1634ad71535c8e50f58d53"
+          }
+        },
+        {
+          "client_id": "983633884078-lva8f88iho8sfctc17vmudpk42k2kmqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvraUqIMW2-9AtltA01r2DR0CEQmfdS3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983633884078-lva8f88iho8sfctc17vmudpk42k2kmqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
