@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">DomaniSistemaInvitaciones</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="tittle_QR">Escaneo QR</string>
+    <string name="title_addUser">Añadir Cliente</string>
+    <string name="title_estadisticas">Estadisticas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
