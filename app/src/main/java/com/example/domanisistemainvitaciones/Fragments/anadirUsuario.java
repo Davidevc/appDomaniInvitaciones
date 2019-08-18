@@ -4,28 +4,25 @@ package com.example.domanisistemainvitaciones.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.example.domanisistemainvitaciones.modelos.ClienteEntrada;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +45,6 @@ public class anadirUsuario extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_anadir_usuario, container, false);
-
 
         /*INICIALIZA LAS VARIABLES CORRESPONDIENTE A LOS SPINNER*/
         final Spinner dia = (Spinner) view.findViewById(R.id.idDia);
@@ -83,20 +79,24 @@ public class anadirUsuario extends Fragment {
                 cE.setDia(diaC);
                 cE.setMes(mesC);
 
+
+
                 // Add a new document with a generated ID
-                db.collection("users")
-                        .document("hola")
+                db.collection("clientesEntrada")
+                        .document(correoC)
                         .set(cE)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                             Toast.makeText(getContext(),"Cliente añadido",Toast.LENGTH_LONG).show();
+                            limpiarCajas();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
+                                limpiarCajas();
                             }
                         });
             }
@@ -126,4 +126,5 @@ public class anadirUsuario extends Fragment {
         nombre.setText("");
         correo.setText("");
     }
+
 }
