@@ -66,7 +66,7 @@ public class anadirUsuario extends Fragment {
         addCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            validacionCampos();
+            if(validacionCampos()){
 
                 String nombreC = nombre.getText().toString();
                 String correoC = correo.getText().toString();
@@ -100,12 +100,13 @@ public class anadirUsuario extends Fragment {
                             }
                         });
             }
+            }
         });
         return view;
     }
 
     /*FUNCION PARA LA VALIDACION CORRECTA DE LOS DATOS A INGRESAR*/
-    private void validacionCampos(){
+    private boolean validacionCampos(){
         String nombreC = nombre.getText().toString();
         String correoC = correo.getText().toString();
         Pattern pattern = Pattern
@@ -116,10 +117,12 @@ public class anadirUsuario extends Fragment {
         if(nombreC.equals("")){
             nombre.setError("Required");
             Toast.makeText(getContext(),"Ingrese Nombre",Toast.LENGTH_LONG).show();
+            return false;
         } else if (mather.find() == false){
             correo.setError("Required");
             Toast.makeText(getContext(),"Ingrese Correo valido",Toast.LENGTH_LONG).show();
-        }
+            return false;
+        }else return true;
     }
     /*FUNCION PARA HACER LIMPIEZA DE LOS DATOS UNA VEZ VALIDADOS Y ENVIADOS AL SERVIDOR*/
     private void limpiarCajas(){
