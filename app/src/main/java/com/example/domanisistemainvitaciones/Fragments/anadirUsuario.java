@@ -3,6 +3,7 @@ package com.example.domanisistemainvitaciones.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,23 +21,21 @@ import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.example.domanisistemainvitaciones.modelos.ClienteEntrada;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class anadirUsuario extends Fragment {
-
+    /*INSTANCIAR FIREBASE*/
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     /*VARIABLES CON RESPECTO AL XML*/
     EditText nombre,correo;
     Button addCliente;
-
-    /*VARIABLES PARA REALIZAR CONEXIONES CON FIREBASE*/
-    /*private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;*/
 
     public anadirUsuario() {
         // Required empty public constructor
@@ -84,12 +83,22 @@ public class anadirUsuario extends Fragment {
                 cE.setDia(diaC);
                 cE.setMes(mesC);
 
-                /*FirebaseApp.initializeApp(getContext());
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                databaseReference = firebaseDatabase.getReference();
-
-                databaseReference.child("clienteNuevo").child(correoC).setValue(cE);*/
-                Toast.makeText(getContext(),cE.toString(),Toast.LENGTH_LONG).show();
+                // Add a new document with a generated ID
+                db.collection("users")
+                        .document("hola")
+                        .set(cE)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                            Toast.makeText(getContext(),"Cliente añadido",Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
+                            }
+                        });
             }
         });
         return view;
@@ -117,14 +126,4 @@ public class anadirUsuario extends Fragment {
         nombre.setText("");
         correo.setText("");
     }
-
-    /*FUNCION PARA INICIALIZAR LOS RECURSOS DE FIREBASE*/
-/*    private void inicializarFirebase(){
-        FirebaseApp.initializeApp(getContext());
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }*/
-
-
-
 }
