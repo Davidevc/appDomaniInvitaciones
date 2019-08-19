@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
+import com.example.domanisistemainvitaciones.modelos.Cliente;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +48,7 @@ public class escanQR extends Fragment {
 
     Button button;
     EditText etCodigo;
+    Cliente cliente = new Cliente();
 
     public escanQR() {
 
@@ -108,26 +110,19 @@ public class escanQR extends Fragment {
                             return;
                         }
 
-                        List<String> cities = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : value) {
+                            cliente.setUid(doc.getId());
                             Log.d("TEST", doc.getId() + "=>" + doc.getData());
                             if (doc.get("nombre") != null) {
-                                cities.add(doc.getString("nombre"));
-                                cities.add(doc.getString("email"));
-                                cities.add(doc.getString("genero"));
+                                cliente.setNombre(doc.getString("nombre"));
+                                cliente.setApellidoPaterno(doc.getString("apellidoP"));
                             }
                         }
-                        Log.d("TEST", "Current cites in CA: " + cities);
+                        Log.d("TEST", "Current cites in CA: " + cliente.toString());
                     }
                 });
 
     }
 
-    public String code64(String testValue) {
-        byte[] encodeValue = android.util.Base64.encode(testValue.getBytes(), Base64.DEFAULT);
-        String correoBtoa = new String(encodeValue);
-        return correoBtoa;
-
-    }
 }
 
