@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -129,5 +130,10 @@ public class anadirUsuario extends Fragment {
         nombre.setText("");
         correo.setText("");
     }
-
+    /*FUNCION PARA CODIFICAR A 64*/
+/*    public String code64(String testValue) {
+        byte[] encodeValue = android.util.Base64.encode(testValue.getBytes(), Base64.DEFAULT);
+        String correoBtoa = new String(encodeValue);
+        return correoBtoa;
+    }*/
 }

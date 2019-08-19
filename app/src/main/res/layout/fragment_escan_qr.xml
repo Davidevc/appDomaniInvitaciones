@@ -7,21 +7,27 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="333dp"
+        android:layout_height="574dp"
+        android:layout_gravity="center"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="382dp"
             android:layout_height="191dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="Button" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="aqui muestra codigo leido"
+            android:inputType="textPersonName" />
+
     </LinearLayout>
 
 </FrameLayout>
