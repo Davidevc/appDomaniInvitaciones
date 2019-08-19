@@ -119,6 +119,21 @@ public class escanQR extends Fragment {
                             }
                         }
                         Log.d("TEST", "Current cites in CA: " + cliente.toString());
+                        db.collection("cliente")
+                                .document(cliente.getUid())
+                                .update("asistencia","acreditado")
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getContext(),"Cliente Acreditado",Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
+                                    }
+                                });
                     }
                 });
 
