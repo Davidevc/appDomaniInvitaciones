@@ -1,6 +1,7 @@
 package com.example.domanisistemainvitaciones.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ public class anadirUsuario extends Fragment {
     /*VARIABLES CON RESPECTO AL XML*/
     EditText nombre,correo;
     Button addCliente;
-
+    private ProgressDialog dialog;
     public anadirUsuario() {
         // Required empty public constructor
     }
@@ -68,7 +69,7 @@ public class anadirUsuario extends Fragment {
             @Override
             public void onClick(View v) {
             if(validacionCampos()){
-
+                dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
                 String nombreC = nombre.getText().toString();
                 String correoC = correo.getText().toString();
                 String diaC = dia.getSelectedItem().toString();
@@ -89,6 +90,7 @@ public class anadirUsuario extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
                             Toast.makeText(getContext(),"Cliente añadido",Toast.LENGTH_LONG).show();
                             limpiarCajas();
                             }
@@ -96,6 +98,7 @@ public class anadirUsuario extends Fragment {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                dialog.dismiss();
                                 Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
                                 limpiarCajas();
                             }
@@ -130,10 +133,5 @@ public class anadirUsuario extends Fragment {
         nombre.setText("");
         correo.setText("");
     }
-    /*FUNCION PARA CODIFICAR A 64*/
-/*    public String code64(String testValue) {
-        byte[] encodeValue = android.util.Base64.encode(testValue.getBytes(), Base64.DEFAULT);
-        String correoBtoa = new String(encodeValue);
-        return correoBtoa;
-    }*/
+
 }

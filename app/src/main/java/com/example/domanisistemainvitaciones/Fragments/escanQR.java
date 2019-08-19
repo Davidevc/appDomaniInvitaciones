@@ -1,5 +1,6 @@
 package com.example.domanisistemainvitaciones.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -44,10 +45,10 @@ import java.util.List;
 
 public class escanQR extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private ProgressDialog dialog;
 
     Button button;
-    EditText etCodigo;
+    TextView etNombreCliente;
     Cliente cliente = new Cliente();
 
     public escanQR() {
@@ -61,7 +62,7 @@ public class escanQR extends Fragment {
         View view = inflater.inflate(R.layout.fragment_escan_qr, container, false);
 
         button = (Button) view.findViewById(R.id.button);
-        etCodigo = (EditText) view.findViewById(R.id.editText);
+        etNombreCliente = (TextView) view.findViewById(R.id.txtnombreCliente);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +91,6 @@ public class escanQR extends Fragment {
             if (result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelaste el escaneo", Toast.LENGTH_SHORT).show();
             } else {
-                etCodigo.setText(result.getContents().toString());
                 editar(result.getContents().toString());
             }
         } else {
@@ -99,6 +99,7 @@ public class escanQR extends Fragment {
     }
 
     private void editar(String correo) {
+        dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
         db.collection("cliente")
                 .whereEqualTo("email", correo)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -106,31 +107,36 @@ public class escanQR extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value,
                                         @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Log.w("TEST", "Listen failed.", e);
+                            dialog.dismiss();
+                            Toast.makeText(getContext(), "No se pudo establecer conexion, intente nuevamente", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         for (QueryDocumentSnapshot doc : value) {
                             cliente.setUid(doc.getId());
-                            Log.d("TEST", doc.getId() + "=>" + doc.getData());
+                            /*Log.d("TEST", doc.getId() + "=>" + doc.getData());*/
                             if (doc.get("nombre") != null) {
                                 cliente.setNombre(doc.getString("nombre"));
                                 cliente.setApellidoPaterno(doc.getString("apellidoP"));
                             }
                         }
-                        Log.d("TEST", "Current cites in CA: " + cliente.toString());
+
                         db.collection("cliente")
                                 .document(cliente.getUid())
                                 .update("asistencia","acreditado")
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        dialog.dismiss();
+                                        etNombreCliente.setText(cliente.getNombre()+" "+cliente.getApellidoPaterno());
                                         Toast.makeText(getContext(),"Cliente Acreditado",Toast.LENGTH_LONG).show();
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
+                                        dialog.dismiss();
                                         Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
                                     }
                                 });

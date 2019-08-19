@@ -3,93 +3,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_layout2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.anadirUsuario">
 
     <LinearLayout
-        android:layout_width="489dp"
-        android:layout_height="709dp"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_width="600dp"
+        android:layout_height="505dp"
+        android:layout_gravity="top"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/custom_layout">
 
         <EditText
             android:id="@+id/txtNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_edittext"
             android:ems="10"
             android:hint="Ingrese Nombre"
             android:inputType="textPersonName"
-            android:textSize="30sp" />
+            android:textSize="45sp" />
 
         <EditText
             android:id="@+id/txtCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_edittext"
             android:ems="10"
             android:hint="Ingrese Correo"
             android:inputType="textPersonName"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/txtFN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Ingrese Fecha de Nacimiento :"
-            android:textSize="24sp" />
+            android:textSize="45sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="162dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Dia :"
-                android:textSize="24sp" />
-
-            <Spinner
-                android:id="@+id/idDia"
-                android:layout_width="59dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:textSize="30sp" />/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes :"
-                android:textSize="24sp" />/>
-
-            <Spinner
-                android:id="@+id/idMes"
-                android:layout_width="104dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:textSize="30sp" /><![CDATA[
-
-            />
-        ]]>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_edittext"
+            android:gravity="bottom"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/idAgregarCliente"
+            <TextView
+                android:id="@+id/txtFN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar Cliente"
-                android:textColorHint="#001B0808"
-                android:textSize="24sp" />
+                android:text="Ingrese Fecha de Nacimiento :"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dia :"
+                    android:textSize="35sp" />
+
+                <Spinner
+                    android:id="@+id/idDia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scrollbarSize="10dp"
+                    android:textSize="50sp" />/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mes :"
+                    android:textSize="35sp" />/>
+
+                <Spinner
+                    android:id="@+id/idMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scrollbarSize="10dp"
+                    android:textSize="50sp" /><![CDATA[
+
+                />
+            ]]>
+            </LinearLayout>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="424dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/idAgregarCliente"
+            android:layout_width="550dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_buttom"
+            android:text="Agregar Cliente"
+            android:textAllCaps="false"
+            android:textColor="#FFFF"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 </FrameLayout>
