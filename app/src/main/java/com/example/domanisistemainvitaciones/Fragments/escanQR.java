@@ -2,6 +2,9 @@ package com.example.domanisistemainvitaciones.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
@@ -16,13 +19,28 @@ import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class escanQR extends Fragment {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     Button button;
     EditText etCodigo;
@@ -30,8 +48,9 @@ public class escanQR extends Fragment {
     public escanQR() {
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup  container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_escan_qr, container, false);
@@ -42,13 +61,14 @@ public class escanQR extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            escanear();
+                escanear();
             }
         });
 
         return view;
     }
-    public void escanear(){
+
+    public void escanear() {
         IntentIntegrator intent = IntentIntegrator.forSupportFragment(escanQR.this);
         intent.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         intent.setPrompt("ESCANEAR CODIGO");
@@ -60,15 +80,15 @@ public class escanQR extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(result != null){
-            if(result.getContents() == null){
-            Toast.makeText(getContext(),"Cancelaste el escaneo",Toast.LENGTH_SHORT).show();
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getContext(), "Cancelaste el escaneo", Toast.LENGTH_SHORT).show();
             } else {
-             etCodigo.setText(result.getContents().toString());
-             /*code64(result.getContents().toString());*/
+                etCodigo.setText(result.getContents().toString());
+                editar(result.getContents().toString());
             }
-        }else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -80,5 +100,39 @@ public class escanQR extends Fragment {
         Log.d("TEST", "e="+ correoBtoa.replace(" ","")+"hola");
     }*/
 
+    private void editar(String correo) {
+        db.collection("cliente")
+                .whereEqualTo("email", correo)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TEST", "Listen failed.", e);
+                            return;
+                        }
+
+                        List<String> cities = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc.get("nombre") != null) {
+                                cities.add(doc.getString("nombre"));
+                                cities.add(doc.getString("email"));
+                                cities.add(doc.getString("genero"));
+                            }
+                        }
+                        Log.d("TEST", "Current cites in CA: " + cities);
+                    }
+                });
+
+        
+
+    }
+
+    public String code64(String testValue) {
+        byte[] encodeValue = android.util.Base64.encode(testValue.getBytes(), Base64.DEFAULT);
+        String correoBtoa = new String(encodeValue);
+        return correoBtoa;
+
+    }
 }
 
