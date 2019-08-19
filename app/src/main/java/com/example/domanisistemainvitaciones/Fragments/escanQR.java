@@ -19,10 +19,13 @@ import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -93,13 +96,6 @@ public class escanQR extends Fragment {
         }
     }
 
-    /*public void code64(String testValue) {
-
-        byte[] encodeValue = android.util.Base64.encode(testValue.getBytes(), Base64.DEFAULT);
-        String correoBtoa = new String(encodeValue);
-        Log.d("TEST", "e="+ correoBtoa.replace(" ","")+"hola");
-    }*/
-
     private void editar(String correo) {
         db.collection("cliente")
                 .whereEqualTo("email", correo)
@@ -114,6 +110,7 @@ public class escanQR extends Fragment {
 
                         List<String> cities = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : value) {
+                            Log.d("TEST", doc.getId() + "=>" + doc.getData());
                             if (doc.get("nombre") != null) {
                                 cities.add(doc.getString("nombre"));
                                 cities.add(doc.getString("email"));
@@ -123,8 +120,6 @@ public class escanQR extends Fragment {
                         Log.d("TEST", "Current cites in CA: " + cities);
                     }
                 });
-
-        
 
     }
 
