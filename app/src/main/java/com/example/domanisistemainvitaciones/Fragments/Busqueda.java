@@ -54,87 +54,20 @@ public class Busqueda extends Fragment {
         if (getArguments() != null) {
             listaInvitados  = (ArrayList<ClientesInvitados>) getArguments().getSerializable("listaInvitados");
         }
-        /*llenarListaClientes();*/
-/*        dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
-        db.collection("clientesInvitados")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                clientesInvitados = new ClientesInvitados(document.getString("Nombre")
-                                        ,document.getString("Correo"),document.getLong("id"));
-                                listaInvitados.add(clientesInvitados);
-                            }
-                            dialog.dismiss();
-                            AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
-                            recyclerViewClientesInvitados.setAdapter(adapter);
-                            Log.d("TEST", "Current cites in CA: " + listaInvitados);
-                        } else {
-                            Log.d("TEST", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });*/
-        //Log.d("TEST", "mostrando segunda vez: " + listaInvitados);
-        /*AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
-        recyclerViewClientesInvitados.setAdapter(adapter);*/
-        /*adapter.setOnClickListener(new View.OnClickListener() {
+
+        AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
+        recyclerViewClientesInvitados.setAdapter(adapter);
+        adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"Selecciono "
-                        +listaInvitados.get(recyclerViewClientesInvitados.getChildAdapterPosition(view)).
+                        +listaInvitados.get(recyclerViewClientesInvitados.getChildAdapterPosition(v)).
                         getNombre(),Toast.LENGTH_SHORT).show();
             }
-        });*/
-        AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
-        recyclerViewClientesInvitados.setAdapter(adapter);
+        });
         return view;
     }
 
-    /*private void llenarListaClientes() {
-        dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
-        db.collection("clientesInvitados")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                clientesInvitados = new ClientesInvitados(document.getString("Nombre")
-                                        ,document.getString("Correo"),document.getLong("id"));
-                                listaInvitados.add(clientesInvitados);
-                            }
-                            dialog.dismiss();
-                            Log.d("TEST", "Current cites in CA: " + listaInvitados);
-                        } else {
-                            Log.d("TEST", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
 
-
-
-
-    *//*.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            dialog.dismiss();
-                            Log.w("TEST", "Listen failed.", e);
-                            return;
-                        }
-                        for (QueryDocumentSnapshot doc : value) {
-                            if (doc.get("nombre") != null) {
-                                dialog.dismiss();
-                                clientesInvitados = new ClientesInvitados(doc.getString("Nombre"),doc.getString("Correo"),doc.getString("id"));
-                                listaInvitados.add(clientesInvitados);
-                            }
-                        }
-                        Log.d("TEST", "Current cites in CA: " + listaInvitados);
-                    }
-                });*//*
-    }*/
 
 }
