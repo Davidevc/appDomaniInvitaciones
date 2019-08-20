@@ -2,6 +2,8 @@ package com.example.domanisistemainvitaciones;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.example.domanisistemainvitaciones.Fragments.Busqueda;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private escanQR fragmentEscanQr = new escanQR();
     private anadirUsuario fragmentAnadirUsuario = new anadirUsuario();
     private estadistica fragmentEstadistica = new estadistica();
+    private Busqueda fragmentBusqueda = new Busqueda();
 
     //POR DEFECTO
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_Estadistica:
                     setFragment(fragmentEstadistica);
+                    return true;
+                case R.id.navigation_Busqueda:
+                    setFragment(fragmentBusqueda);
                     return true;
             }
             return false;

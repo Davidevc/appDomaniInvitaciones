@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_trending_up_black_24dp"
         android:title="@string/title_estadisticas" />
 
+    <item
+        android:id="@+id/navigation_Busqueda"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Busqueda" />
+
 </menu>
