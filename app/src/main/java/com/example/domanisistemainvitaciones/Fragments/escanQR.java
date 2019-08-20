@@ -1,6 +1,8 @@
 package com.example.domanisistemainvitaciones.Fragments;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.example.domanisistemainvitaciones.modelos.Cliente;
+import com.example.domanisistemainvitaciones.utilitarios.Conectividad;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,6 +54,9 @@ public class escanQR extends Fragment {
     TextView etNombreCliente;
     Cliente cliente = new Cliente();
 
+    Conectividad conectividad;
+    AlertDialog alert = null;
+
     public escanQR() {
 
     }
@@ -67,7 +73,11 @@ public class escanQR extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                escanear();
+                if(!conectividad.isOnline(getContext())){
+                    AlertNoCon();
+                }else {
+                    escanear();
+                }
             }
         });
 
@@ -143,6 +153,33 @@ public class escanQR extends Fragment {
                     }
                 });
 
+    }
+
+    private void AlertNoCon() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Actualmente no posee conexión, revise si están activados sus datos.")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
+
+    protected void showDialog() {
+        AlertDialog.Builder alertaError= new AlertDialog.Builder(getContext());
+        alertaError.setMessage("Error al obtener los datos, \n intente mas tarde.")
+                .setCancelable(false).setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+        android.app.AlertDialog alertDialog = alertaError.create();
+        alertDialog.show();
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.domanisistemainvitaciones.Fragments;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.domanisistemainvitaciones.R;
 import com.example.domanisistemainvitaciones.modelos.ClienteEntrada;
+import com.example.domanisistemainvitaciones.utilitarios.Conectividad;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +39,13 @@ public class anadirUsuario extends Fragment {
     EditText nombre,correo;
     Button addCliente;
     private ProgressDialog dialog;
-    public anadirUsuario() {
+
+
+    Conectividad conectividad;
+    AlertDialog alert = null;
+
+    public anadirUsuario()
+    {
         // Required empty public constructor
     }
 
@@ -69,40 +78,43 @@ public class anadirUsuario extends Fragment {
             @Override
             public void onClick(View v) {
             if(validacionCampos()){
-                dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
-                String nombreC = nombre.getText().toString();
-                String correoC = correo.getText().toString();
-                String diaC = dia.getSelectedItem().toString();
-                String mesC = mes.getSelectedItem().toString();
+                if(!conectividad.isOnline(getContext())){
+                    AlertNoCon();
+                }else {
+                    dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...", true);
+                    String nombreC = nombre.getText().toString();
+                    String correoC = correo.getText().toString();
+                    String diaC = dia.getSelectedItem().toString();
+                    String mesC = mes.getSelectedItem().toString();
 
-                ClienteEntrada cE= new ClienteEntrada();
-                cE.setNombre(nombreC);
-                cE.setCorreo(correoC);
-                cE.setDia(diaC);
-                cE.setMes(mesC);
+                    ClienteEntrada cE = new ClienteEntrada();
+                    cE.setNombre(nombreC);
+                    cE.setCorreo(correoC);
+                    cE.setDia(diaC);
+                    cE.setMes(mesC);
 
 
-
-                // Add a new document with a generated ID
-                db.collection("clientesEntrada")
-                        .document(correoC)
-                        .set(cE)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                dialog.dismiss();
-                            Toast.makeText(getContext(),"Cliente añadido",Toast.LENGTH_LONG).show();
-                            limpiarCajas();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                dialog.dismiss();
-                                Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
-                                limpiarCajas();
-                            }
-                        });
+                    // Add a new document with a generated ID
+                    db.collection("clientesEntrada")
+                            .document(correoC)
+                            .set(cE)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    dialog.dismiss();
+                                    Toast.makeText(getContext(), "Cliente añadido", Toast.LENGTH_LONG).show();
+                                    limpiarCajas();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    dialog.dismiss();
+                                    Toast.makeText(getContext(), "Error en la conexion, intente nuevamente.", Toast.LENGTH_LONG).show();
+                                    limpiarCajas();
+                                }
+                            });
+                }
             }
             }
         });
@@ -134,4 +146,30 @@ public class anadirUsuario extends Fragment {
         correo.setText("");
     }
 
+    private void AlertNoCon() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Actualmente no posee conexión, revise si están activados sus datos.")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
+
+    protected void showDialog() {
+        AlertDialog.Builder alertaError= new AlertDialog.Builder(getContext());
+        alertaError.setMessage("Error al obtener los datos, \n intente mas tarde.")
+                .setCancelable(false).setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+        android.app.AlertDialog alertDialog = alertaError.create();
+        alertDialog.show();
+    }
 }
