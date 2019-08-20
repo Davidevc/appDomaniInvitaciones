@@ -3,6 +3,8 @@ package com.example.domanisistemainvitaciones.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +17,15 @@ import java.util.ArrayList;
 
 public class AdapterClientesInvitados extends
         RecyclerView.Adapter<AdapterClientesInvitados.ClientesViewHolder> implements
-        View.OnClickListener{
+        View.OnClickListener,Filterable {
 
     ArrayList<ClientesInvitados> listaInvitados;
+    ArrayList<ClientesInvitados> listaInvitadosFull;
     private View.OnClickListener listener;
 
     public AdapterClientesInvitados(ArrayList<ClientesInvitados> listaInvitados) {
         this.listaInvitados = listaInvitados;
+        listaInvitadosFull = new ArrayList<>(listaInvitados);
     }
 
     @NonNull
@@ -54,6 +58,40 @@ public class AdapterClientesInvitados extends
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<ClientesInvitados> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length()==0){
+                filteredList.addAll(listaInvitadosFull);
+            }else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (ClientesInvitados item : listaInvitadosFull){
+                    if (item.getNombre().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listaInvitados.clear();
+            listaInvitados.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class ClientesViewHolder extends RecyclerView.ViewHolder {
         TextView txtNombre,txtCorreo;
         public ClientesViewHolder(View view) {
@@ -62,4 +100,6 @@ public class AdapterClientesInvitados extends
             txtCorreo = (TextView) view.findViewById(R.id.txtCorreo);
         }
     }
+
+
 }
