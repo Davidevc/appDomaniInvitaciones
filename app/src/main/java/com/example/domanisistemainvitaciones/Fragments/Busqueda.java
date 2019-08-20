@@ -50,8 +50,12 @@ public class Busqueda extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_busqueda, container, false);
         recyclerViewClientesInvitados = (RecyclerView) view.findViewById(R.id.recyclerListaInvitados);
         recyclerViewClientesInvitados.setLayoutManager(new LinearLayoutManager(getContext()));
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            listaInvitados  = (ArrayList<ClientesInvitados>) getArguments().getSerializable("listaInvitados");
+        }
         /*llenarListaClientes();*/
-        dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
+/*        dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
         db.collection("clientesInvitados")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -71,8 +75,8 @@ public class Busqueda extends Fragment {
                             Log.d("TEST", "Error getting documents: ", task.getException());
                         }
                     }
-                });
-        Log.d("TEST", "mostrando segunda vez: " + listaInvitados);
+                });*/
+        //Log.d("TEST", "mostrando segunda vez: " + listaInvitados);
         /*AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
         recyclerViewClientesInvitados.setAdapter(adapter);*/
         /*adapter.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +87,8 @@ public class Busqueda extends Fragment {
                         getNombre(),Toast.LENGTH_SHORT).show();
             }
         });*/
+        AdapterClientesInvitados adapter = new AdapterClientesInvitados(listaInvitados);
+        recyclerViewClientesInvitados.setAdapter(adapter);
         return view;
     }
 
