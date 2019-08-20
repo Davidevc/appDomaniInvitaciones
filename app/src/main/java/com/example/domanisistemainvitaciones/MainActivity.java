@@ -80,17 +80,16 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 clientesInvitados = new ClientesInvitados(document.getString("Nombre")
-                                        ,document.getString("Correo"),document.getLong("id"));
+                                        ,document.getString("Correo"),document.getLong("id"),document.getId());
                                 listaInvitados.add(clientesInvitados);
                             }
+
                             dialog.dismiss();
                             Bundle bundle = new Bundle();
                             bundle.putParcelableArrayList("listaInvitados",listaInvitados);
                             fragmentBusqueda.setArguments(bundle);
-                            Log.d("TEST", "Current cites in CA: " + listaInvitados);
                         } else {
                             dialog.dismiss();
-                            Log.d("TEST", "Error getting documents: ", task.getException());
                         }
                     }
                 });

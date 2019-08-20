@@ -7,11 +7,14 @@ public class ClientesInvitados implements Parcelable {
     private String nombre;
     private String correo;
     private Long id;
+    private String Uid;
 
-    public ClientesInvitados(String nombre, String correo, Long id) {
+
+    public ClientesInvitados(String nombre, String correo, Long id, String uid) {
         this.nombre = nombre;
         this.correo = correo;
         this.id = id;
+        Uid = uid;
     }
 
     protected ClientesInvitados(Parcel in) {
@@ -22,6 +25,7 @@ public class ClientesInvitados implements Parcelable {
         } else {
             id = in.readLong();
         }
+        Uid = in.readString();
     }
 
     public static final Creator<ClientesInvitados> CREATOR = new Creator<ClientesInvitados>() {
@@ -60,13 +64,12 @@ public class ClientesInvitados implements Parcelable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "ClientesInvitados{" +
-                "nombre='" + nombre + '\'' +
-                ", correo='" + correo + '\'' +
-                ", id='" + id + '\'' +
-                '}';
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 
     @Override
@@ -84,5 +87,6 @@ public class ClientesInvitados implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(id);
         }
+        dest.writeString(Uid);
     }
 }

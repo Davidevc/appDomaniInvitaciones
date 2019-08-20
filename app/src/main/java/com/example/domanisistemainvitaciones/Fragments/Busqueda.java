@@ -68,30 +68,17 @@ public class Busqueda extends Fragment {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acreditarClienteInvitado(v);
+                String id = listaInvitados.get(recyclerViewClientesInvitados.getChildAdapterPosition(v)).
+                        getUid();
+                acreditarClienteInvitado(v,id);
+
             }
         });
         return view;
     }
 
-    private void acreditarClienteInvitado(View v) {
+    private void acreditarClienteInvitado(View v,String id) {
         dialog = (ProgressDialog) ProgressDialog.show(getContext(), "Cargando...", "espere por favor...",true);
-        db.collection("clientesInvitados")
-                .whereEqualTo("id", listaInvitados.get(recyclerViewClientesInvitados.getChildAdapterPosition(v)).getId())
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        String id="";
-                        if (e != null) {
-                            dialog.dismiss();
-                            Toast.makeText(getContext(), "No se pudo establecer conexion, intente nuevamente", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        for (QueryDocumentSnapshot doc : value) {
-                            id =doc.getId();
-                        }
 
                         db.collection("clientesInvitados")
                                 .document(id)
@@ -111,9 +98,9 @@ public class Busqueda extends Fragment {
                                         Toast.makeText(getContext(),"Error en la conexion, intente nuevamente.",Toast.LENGTH_LONG).show();
                                     }
                                 });
-                    }
-                });
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
